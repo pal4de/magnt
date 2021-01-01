@@ -1,3 +1,5 @@
+@import "~normalize.css";
+
 .App {
   text-align: center;
   background-color: #eee;
@@ -16,8 +18,19 @@
   width: $size;
   border-radius: 100%;
 
+  background-size: cover;
+
   $box-shadow-y: $size * 0.1;
   $box-shadow-blur: $size * 0.15;
   $box-shadow-spread: $size * 0.0;
   box-shadow: 0 $box-shadow-y $box-shadow-blur $box-shadow-spread rgba(0, 0, 0, 0.2);
+}
+
+.ProfileName {
+  margin: 10px 0 10px;
+}
+
+.ProfileBio {
+  color: #888;
+  font-size: 0.8em;
 }
