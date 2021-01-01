@@ -10,6 +10,14 @@
   color: #111;
 }
 
-.App-link {
-  color: #61dafb;
+.ProfileImage {
+  $size: 100px;
+  height: $size;
+  width: $size;
+  border-radius: 100%;
+
+  $box-shadow-y: $size * 0.1;
+  $box-shadow-blur: $size * 0.15;
+  $box-shadow-spread: $size * 0.0;
+  box-shadow: 0 $box-shadow-y $box-shadow-blur $box-shadow-spread rgba(0, 0, 0, 0.2);
 }
