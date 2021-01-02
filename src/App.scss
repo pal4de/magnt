@@ -5,6 +5,13 @@
   src: url('./font/jaapokki/subtract/web/jaapokkisubtract-regular.ttf') format('truetype');
 }
 
+@mixin shadow($size) {
+  $y: $size * 0.1;
+  $blur: $size * 0.15;
+  $spread: 0;
+  box-shadow: 0 $y $blur $spread rgba(0, 0, 0, 0.2);
+}
+
 html {
   background-color: #eee;
   color: #111;
@@ -17,7 +24,7 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(5px + 2vmin);
 
   header {
     position: absolute;
@@ -34,28 +41,61 @@ html {
     }
   }
 
-  .Profile {
-    .ProfileImage {
-      $size: 100px;
-      height: $size;
-      width: $size;
-      border-radius: 100%;
+  .UserPage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-      background-size: cover;
+    // @media (max-width:480px) {
+    //   flex-direction: column;
+    // }
+  }
+}
 
-      $box-shadow-y: $size * 0.1;
-      $box-shadow-blur: $size * 0.15;
-      $box-shadow-spread: $size * 0.0;
-      box-shadow: 0 $box-shadow-y $box-shadow-blur $box-shadow-spread rgba(0, 0, 0, 0.2);
-    }
+.Profile {
+  flex-grow: 1;
 
-    .ProfileName {
-      margin: 10px 0 10px;
-    }
+  .ProfileImage {
+    $size: 100px;
 
-    .ProfileBio {
-      color: #888;
-      font-size: 0.8em;
+    height: $size;
+    width: $size;
+    border-radius: 100%;
+
+    background-size: cover;
+
+    @include shadow($size);
+  }
+
+  .ProfileName {
+    margin: 10px 0 10px;
+  }
+
+  .ProfileBio {
+    color: #888;
+    font-size: 0.8em;
+  }
+}
+
+.SnsList {
+  padding-top: 1em;
+  flex-grow: 2;
+  li {
+    list-style: none;
+    padding-bottom: 1em;
+    a {
+      color: inherit;
+      display: block;
+      padding: 1em;
+      width: 100%;
+      text-decoration: none;
+      text-align: left;
+
+      @include shadow(100px);
+
+      .id {
+        margin-left: 1em;
+      }
     }
   }
 }
