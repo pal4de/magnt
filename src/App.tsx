@@ -11,6 +11,7 @@ const exampleProfile: ProfileProps = {
 function App() {
   return (
     <div className="App">
+      <header><span className="logo">Magnt</span></header>
       <Profile data={exampleProfile} />
     </div>
   );
@@ -23,11 +24,11 @@ type ProfileProps = {
 };
 const Profile: FC<{data: ProfileProps}> = (props) => {
   return (
-    <header className="Profile">
+    <div className="Profile">
       <ProfileImage src={props.data.image} />
       <ProfileName name={props.data.name} />
       {props.data.bio && <ProfileBio bio={props.data.bio} />}
-    </header>
+    </div>
   );
 };
 
