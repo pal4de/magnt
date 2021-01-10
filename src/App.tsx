@@ -1,7 +1,6 @@
-import React, {FC} from 'react';
+import React from 'react';
+import * as SnsUtil from './SnsUtil';
 import './App.scss';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import * as FaBrands from "@fortawesome/free-brands-svg-icons";
 
 const exampleProfile: ProfileProps = {
   name: "pal4de",
@@ -16,10 +15,15 @@ const exampleProfile: ProfileProps = {
       type: 'github',
       id: 'pal4de',
     },
+    {
+      type: 'website',
+      id: 'https://www.notion.so/pal4de/f62744f9d8ff431ab9e54349826330af',
+      displayName: 'Notion',
+    },
   ]
 }
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <header><span className="logo">Magnt</span></header>
@@ -35,25 +39,9 @@ type ProfileProps = {
   name: string,
   image: string,
   bio: string,
-  sns: SnsInfo[],
+  sns: SnsUtil.AccountInfo[],
 };
-
-type SnsInfo = {
-  type: SnsType,
-  id: string,
-  // 非公開アカウントはクライアントで処理しない！！！！
-};
-const snsTypeList = [
-  'twitter',
-  'instagram',
-  'facebook',
-  'soundcloud',
-  'youtube',
-  'github',
-] as const;
-type SnsType = typeof snsTypeList[number];
-
-const Profile: FC<{data: ProfileProps}> = (props) => {
+const Profile: React.FC<{data: ProfileProps}> = (props) => {
   return (
     <div className="Profile">
       <ProfileImage src={props.data.image} />
@@ -62,44 +50,30 @@ const Profile: FC<{data: ProfileProps}> = (props) => {
     </div>
   );
 };
-const ProfileImage: FC<{src: string}> = (props) => {
+const ProfileImage: React.FC<{src: string}> = (props) => {
   const style: React.CSSProperties = {
     backgroundImage: `url(${props.src})`
   };
   return <div className="ProfileImage" style={style} />;
 };
-const ProfileName: FC<{name: string}> = (props) => {
+const ProfileName: React.FC<{name: string}> = (props) => {
   return <h3 className="ProfileName">{props.name}</h3>;
 };
-const ProfileBio: FC<{bio: string}> = (props) => {
+const ProfileBio: React.FC<{bio: string}> = (props) => {
   return <div className="ProfileBio">{props.bio}</div>;
 };
 
-const SnsList: FC<{sns: SnsInfo[]}> = (props) => {
+const SnsList: React.FC<{sns: SnsUtil.AccountInfo[]}> = (props) => {
   return (
     <ul className="SnsList">
-      {props.sns.map((snsInfo: SnsInfo, index: number) => {
+      {props.sns.map((snsInfo: SnsUtil.AccountInfo, index: number) => {
+        const ConcreteSns = SnsUtil.Sns.concrete(snsInfo.type);
         return (
-          <li key={index}><a href="#dummy" target="blank">
-            <SnsIcon type={snsInfo.type} />
-            <span className="id">{snsInfo.id}</span>
-          </a></li>
+          <ConcreteSns key={index} id={snsInfo.id} displayName={snsInfo.displayName} />
         );
       })}
     </ul>
   )
 };
-const SnsIcon: FC<{type: SnsType}> = (props) => {
-  type FaBrandsMap = {[P in SnsType]: FaBrands.IconDefinition};
-  const mapper: FaBrandsMap = { // SNS毎にクラスを定義するべき
-    twitter: FaBrands.faTwitter,
-    facebook: FaBrands.faFacebook,
-    github: FaBrands.faGithub,
-    soundcloud: FaBrands.faSoundcloud,
-    instagram: FaBrands.faInstagram,
-    youtube: FaBrands.faYoutube,
-  }
-  return <FontAwesomeIcon icon={mapper[props.type]} />
-}
 
 export default App;
