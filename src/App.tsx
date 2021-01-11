@@ -1,5 +1,5 @@
 import React from 'react';
-import * as SnsUtil from './SnsUtil';
+import * as Sns from './Sns';
 import './App.scss';
 
 const exampleProfile: ProfileProps = {
@@ -39,7 +39,7 @@ type ProfileProps = {
   name: string,
   image: string,
   bio: string,
-  sns: SnsUtil.AccountInfo[],
+  sns: Sns.AccountInfo[],
 };
 const Profile: React.FC<{data: ProfileProps}> = (props) => {
   return (
@@ -63,11 +63,11 @@ const ProfileBio: React.FC<{bio: string}> = (props) => {
   return <div className="ProfileBio">{props.bio}</div>;
 };
 
-const SnsList: React.FC<{sns: SnsUtil.AccountInfo[]}> = (props) => {
+const SnsList: React.FC<{sns: Sns.AccountInfo[]}> = (props) => {
   return (
     <ul className="SnsList">
-      {props.sns.map((snsInfo: SnsUtil.AccountInfo, index: number) => {
-        const ConcreteSns = SnsUtil.Sns.concrete(snsInfo.type);
+      {props.sns.map((snsInfo: Sns.AccountInfo, index: number) => {
+        const ConcreteSns = Sns.AbstractSns.concrete(snsInfo.type);
         return (
           <ConcreteSns key={index} id={snsInfo.id} displayName={snsInfo.displayName} />
         );

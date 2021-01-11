@@ -8,7 +8,7 @@ type SnsProps = {
 };
 export type AccountInfo = SnsProps & {type: string};
 type SnsState = {};
-export abstract class Sns extends React.Component<SnsProps, SnsState> {
+export abstract class AbstractSns extends React.Component<SnsProps, SnsState> {
   render() {
     return (
       <li><a href={this.url} target="blank">
@@ -23,8 +23,8 @@ export abstract class Sns extends React.Component<SnsProps, SnsState> {
     return <FontAwesomeIcon icon={this.faIcon} />
   };
 
-  static classList: {[name: string]: typeof Sns} = {};
-  static register(name: string, cls: typeof Sns) {
+  static classList: {[name: string]: typeof AbstractSns} = {};
+  static register(name: string, cls: typeof AbstractSns) {
     this.classList[name] = cls;
   }
   static concrete(name: string) {
@@ -36,58 +36,60 @@ export abstract class Sns extends React.Component<SnsProps, SnsState> {
   }
 }
 
-class Twitter extends Sns {
+class Twitter extends AbstractSns {
   faIcon = FaBrands.faTwitter;
   get url() {
     return `https://twitter.com/${this.props.id}`;
   }
 }
-Sns.register('twitter', Twitter);
+AbstractSns.register('twitter', Twitter);
 
-class Instagram extends Sns {
+class Instagram extends AbstractSns {
   faIcon = FaBrands.faInstagram;
   get url() {
     return `https://www.instagram.com/${this.props.id}/`;
   }
 }
-Sns.register('instagram', Instagram);
+AbstractSns.register('instagram', Instagram);
 
-class Facebook extends Sns {
+class Facebook extends AbstractSns {
   faIcon = FaBrands.faFacebook;
   get url() {
     return `https://www.facebook.com/${this.props.id}/`;
   }
 }
-Sns.register('facebook', Facebook);
+AbstractSns.register('facebook', Facebook);
 
-class Soundcloud extends Sns {
+class Soundcloud extends AbstractSns {
   faIcon = FaBrands.faSoundcloud;
   get url() {
     return `https://www.facebook.com/${this.props.id}/`;
   }
 }
-Sns.register('soundcloud', Soundcloud);
+AbstractSns.register('soundcloud', Soundcloud);
 
-class Youtube extends Sns {
+class Youtube extends AbstractSns {
   faIcon = FaBrands.faSoundcloud;
   get url() {
     return `https://www.youtube.com/channel/${this.props.id}`;
   }
 }
-Sns.register('youtube', Youtube);
+AbstractSns.register('youtube', Youtube);
 
-class Github extends Sns {
+class Github extends AbstractSns {
   faIcon = FaBrands.faGithub;
   get url() {
     return `https://github.com/${this.props.id}`;
   }
 }
-Sns.register('github', Github);
+AbstractSns.register('github', Github);
 
-class Website extends Sns {
+class Website extends AbstractSns {
   faIcon = FaBrands.faFontAwesome; //暫定
   get url() {
     return this.props.id;
   }
 }
-Sns.register('website', Website);
+AbstractSns.register('website', Website);
+
+export default AbstractSns;
